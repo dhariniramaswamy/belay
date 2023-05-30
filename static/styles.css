@@ -1,0 +1,47 @@
+.channels-column {
+    flex: 33.33%;
+    height: 500px;
+    padding: 10px;
+    margin: 5px;
+    background-color: #5F8575;
+    text-align: left;
+  }
+
+  .messages-column {
+    flex: 33.33%;
+    height: auto;
+    padding: 10px;
+    margin: 5px;
+    background-color: #5F8575;
+    text-align: left;
+  }
+
+  .replies-column {
+    flex: 33.33%;
+    height: 500px;
+    padding: 10px;
+    margin: 5px;
+    background-color: #5F8575;
+    text-align: left;
+  }
+
+  .container {
+     display: flex;
+  }
+
+  .textarea {
+    max-width: 100%;
+  }
+
+  .close-replies {
+    float:right;
+    margin-top: 50px;
+  }
+
+  .channel-button:hover {
+    background-color: #0000FF;
+  }
+
+  .channel-button:focus {
+    background-color: #FF0000;
+  }
