@@ -25,10 +25,10 @@ similarly to Slack but is significantly smaller in scope.
   that does, but replies can't have nested replies of their own.
 
 ## File Structure
-```db```: contains the SQL files to initialize the database
+```db```: contains the SQL files to initialize the database <br />
 ```static```: contains the JavaScript files with React components, HTML file 
-to display the web application, and the CSS file
-```app.py```: contains the Flask app
+to display the web application, and the CSS file <br />
+```app.py```: contains the Flask app <br />
 ```requirements.txt```: contains the package requirements to run this project
 
 ## Refactoring
