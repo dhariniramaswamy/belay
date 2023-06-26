@@ -24,7 +24,14 @@ similarly to Slack but is significantly smaller in scope.
   either belong directly to a channel or are replies in a thread to a message
   that does, but replies can't have nested replies of their own.
 
-  ## Refactoring
+## File Structure
+```db```: contains the SQL files to initialize the database
+```static```: contains the JavaScript files with React components, HTML file 
+to display the web application, and the CSS file
+```app.py```: contains the Flask app
+```requirements.txt```: contains the package requirements to run this project
+
+## Refactoring
   I am currently working on making the React components more dynamic using
   ```switch``` statements and adding more functionality for users. I'm
   also working on the CSS portion to make the front end more intuitive

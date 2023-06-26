@@ -13,6 +13,9 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 # --------- DATABASE HELPER FUNCTIONS --------- 
 
 def get_db():
+    '''
+    Connects to the database
+    '''
     db = getattr(g, '_database', None)
 
     if db is None:
@@ -28,6 +31,10 @@ def close_connection(exception):
         db.close()
 
 def query_db(query, args=(), one=False):
+    '''
+    Reusable function to query the database with
+    or without arguments and return a list of tuples.
+    '''
     db = get_db()
     cursor = db.execute(query, args)
     rows = cursor.fetchall()
@@ -39,27 +46,23 @@ def query_db(query, args=(), one=False):
         return rows
     return None
 
-# def new_user():
-#     name = "Unnamed User #" + ''.join(random.choices(string.digits, k=6))
-#     password = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
-#     session_token = ''.join(random.choices(string.ascii_lowercase + string.digits, k=40))
-#     u = query_db('insert into users (username, password, session_token) ' + 
-#         'values (?, ?, ?) returning id, username, password, session_token',
-#         (name, password, session_token),
-#         one=True)
-#     return name, session_token
 
 @app.route('/')
 @app.route('/channels/<channel_id>')
 @app.route('/login')
 def index(channel_id=None):
-    print("HELLO")
+    '''
+    Renders the webpage.
+    '''
     return app.send_static_file('index.html')
 
 # ---------  API ROUTES --------- 
 
 @app.route('/api/signup', methods=["POST"])
 def signup():
+    '''
+    Allows a user to sign up and generates session token.
+    '''
     username = request.headers["username"]
     password = request.headers["password"]
     session_token = ''.join(random.choices(string.ascii_lowercase + string.digits, k=40))
@@ -70,6 +73,9 @@ def signup():
 
 @app.route('/api/login', methods=["GET"])
 def login():
+    '''
+    Allows a user to login and authenticates user.
+    '''
     rv = {"status": 404, "error_msg": "account info not found"}
     username = request.headers["userName"]
     password = request.headers["password"]
@@ -82,6 +88,9 @@ def login():
 
 @app.route('/api/create_channel', methods=["POST"])
 def create_channel():
+    '''
+    Creates a new channel
+    '''
     if check_session_token():
         channel_name = request.headers["channelName"]
         result = query_db("insert into channels (channel_name) values (?) returning id", [channel_name], one=True)[0]
@@ -93,6 +102,9 @@ def create_channel():
 
 @app.route('/api/get_channels', methods=["GET"])
 def get_channels():
+    '''
+    Returns a json object containing the current channels.
+    '''
     if check_session_token():
         channels = query_db("select * from channels", (), one=False)
         channels_js = []
@@ -109,6 +121,10 @@ def get_channels():
 
 @app.route('/api/get_messages', methods=["GET"])
 def get_messages():
+    '''
+    Returns a json object containing all the messages
+    for a given channel.
+    '''
     if check_session_token():
         channel_id = request.headers["channelId"]
         print("CHANNEL ID: ", channel_id)
@@ -135,6 +151,10 @@ def get_messages():
 
 @app.route('/api/get_replies', methods=["GET"])
 def get_replies():
+    '''
+    Returns a json object containing all the replies
+    for a given message.
+    '''
     if check_session_token():
         msg_id = request.headers["messageId"]
         print("RECEIVED MSG_ID: ", msg_id)
@@ -158,6 +178,9 @@ def get_replies():
 
 @app.route('/api/add_message', methods=["POST"])
 def add_message():
+    '''
+    Allows a user to post a message
+    '''
     if check_session_token():
         session_token = request.headers["sessionToken"]
         user_id = query_db("select id from users where session_token = ?", [session_token], one=True)[0]
@@ -172,6 +195,9 @@ def add_message():
 
 @app.route('/api/update_username', methods=["POST"])
 def update_username():
+    '''
+    Allows a user to update the username
+    '''
     if check_session_token():
         session_token = request.headers["sessionToken"]
         new_username = request.headers["username"]
@@ -182,6 +208,9 @@ def update_username():
 
 @app.route('/api/update_password', methods=["POST"])
 def update_password():
+    '''
+    Allows the user to update their password
+    '''
     if check_session_token():
         session_token = request.headers["sessionToken"]
         new_password = request.headers["password"]
@@ -192,17 +221,26 @@ def update_password():
 
 @app.route('/api/update_last_read', methods=["POST"])
 def update_last_read():
+    '''
+    Get the last read message. Need to implement.
+    '''
     pass
 
 
 @app.route('/api/get_unread_count', methods=["GET"])
 def get_unread_count():
-    return jsonify(5)
+    '''
+    Get count of unread messages. Need to implement.
+    '''
+    pass
 
 
 # ---------  HELPER FUNCTIONS --------- 
 
 def check_session_token():
+    '''
+    Authenticates user
+    '''
     rv = None
     session_token = request.headers["sessionToken"]
     print("HELLO")
@@ -215,9 +253,28 @@ def check_session_token():
     
 
 def get_username(user_id):
+    '''
+    Returns the username given the user id.
+    '''
     username = query_db("select username from users where id = ?", [user_id], one=True)[0]
     return username
 
 def reply_count(msg_id):
+    '''
+    Returns an integer describing the number
+    of replies for a message.
+    '''
     count = query_db("select count(reply_user_id) from messages where id = ?", [msg_id], one=True)[0]
     return count
+
+
+# ---------  Commented out code --------- 
+# def new_user():
+#     name = "Unnamed User #" + ''.join(random.choices(string.digits, k=6))
+#     password = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
+#     session_token = ''.join(random.choices(string.ascii_lowercase + string.digits, k=40))
+#     u = query_db('insert into users (username, password, session_token) ' + 
+#         'values (?, ?, ?) returning id, username, password, session_token',
+#         (name, password, session_token),
+#         one=True)
+#     return name, session_token
