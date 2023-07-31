@@ -1,4 +1,4 @@
-export default function SignUp({setLogIn, setShowSignUp}){
+export default function SignUp({page, setPage}){
     function handleClick() {
         history.pushState("", "", "/signup")
         const username = document.getElementById("username").value;
@@ -13,8 +13,8 @@ export default function SignUp({setLogIn, setShowSignUp}){
                 response.json().then((data) => {
                     console.log(data.session_token)
                     window.localStorage.setItem("dramaswamy_session_token", data.session_token);
-                    setLogIn(true);
-                    setShowSignUp(false);
+                    setPage("/home")
+                    history.pushState(page, "", page)
                 }
                 )
             } 

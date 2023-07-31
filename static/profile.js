@@ -1,4 +1,4 @@
-export default function Profile({setShowProfile}) {
+export default function Profile({page, setPage}) {
     const sessionToken = window.localStorage.getItem("dramaswamy_session_token");
     console.log("making it to profile page");
     function handleClickUsername () {
@@ -13,7 +13,8 @@ export default function Profile({setShowProfile}) {
             if(response.status == 200){
                 response.json().then((data) => {
                     console.log(data);
-                    setShowProfile(false);
+                    setPage("/home")
+                    history.pushState(page, "", page)
                 }
                 )
             } else {
@@ -38,7 +39,8 @@ export default function Profile({setShowProfile}) {
             if(response.status == 200){
                 response.json().then((data) => {
                     console.log(data);
-                    setShowProfile(false);
+                    setPage("/home")
+                    history.pushState(page, "", page)
                 }
                 )
             } else {
