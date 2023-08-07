@@ -1,21 +1,6 @@
 import Channel from "./channel.js";
 
-export default function Channels ({setMessages, setCurrentChannel, setPage, channelSetter, channels}) {
-    
-    function getChannels(channelSetter) {
-        var sessionToken = window.localStorage.getItem("dramaswamy_session_token");
-        fetch("/api/get_channels", {
-            "headers": {"Content-Type": "application/json", "sessionToken": sessionToken}
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-            // return data
-        channelSetter(data);
-        });
-    }
-
-    getChannels(channelSetter);
+export default function Channels ({setMessages, setCurrentChannel, setPage, channels}) {
     return (
         <div>
             <h2>Home</h2>

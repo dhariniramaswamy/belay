@@ -23,7 +23,18 @@ import RepliesColumn from "./replies_column.js";
 export default function App () {
     console.log("ACCESSING APP");
 
-    
+    function getChannels(channelSetter) {
+        var sessionToken = window.localStorage.getItem("dramaswamy_session_token");
+        fetch("/api/get_channels", {
+            "headers": {"Content-Type": "application/json", "sessionToken": sessionToken}
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            // return data
+        channelSetter(data);
+        });
+    }
 
     const [channels, channelSetter] = React.useState([]);
     const [currentChannel, setCurrentChannel] = React.useState("");
@@ -56,7 +67,6 @@ export default function App () {
                     setCurrentChannel={setCurrentChannel}
                     setMessages={setMessages}
                     setPage={setPage}
-                    channelSetter={channelSetter}
                     channels={channels}/>
                     <MessagesColumn 
                     messages={messages} 
@@ -76,12 +86,12 @@ export default function App () {
             )
         case path == "/channels":
             console.log("reached home");
+            getChannels(channelSetter);
             return (
                 <Channels
                 setCurrentChannel={setCurrentChannel}
                 setMessages={setMessages}
                 setPage={setPage}
-                channelSetter={channelSetter}
                 channels={channels}/>
             )
             default:
