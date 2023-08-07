@@ -51,12 +51,21 @@ export default function App () {
         case path == `/channels/${currentChannel}/messages`:
             console.log(currentChannel);
             return (
-                <MessagesColumn 
-                messages={messages} 
-                page={setPage}
-                setReplies={setReplies} 
-                currentChannel={currentChannel}
-                setCurrentMessage = {setCurrentMessage}/>)
+                <React.Fragment> 
+                    <Channels
+                    setCurrentChannel={setCurrentChannel}
+                    setMessages={setMessages}
+                    setPage={setPage}
+                    channelSetter={channelSetter}
+                    channels={channels}/>
+                    <MessagesColumn 
+                    messages={messages} 
+                    page={setPage}
+                    setReplies={setReplies} 
+                    currentChannel={currentChannel}
+                    setCurrentMessage = {setCurrentMessage}/>
+                </React.Fragment>
+                )
         case path == `/channels/${currentChannel}/messages/${currentMessage}/replies`:
             return (
                 <RepliesColumn
@@ -77,6 +86,7 @@ export default function App () {
             )
             default:
               console.log("no match");
+              return null;
         }
 
     // addEventListener("popstate", (event) => {
