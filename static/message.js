@@ -1,15 +1,16 @@
 
 
-export default function Message({messageId, userName, msgBody, setReplies, replyCount, setCurrentMessage, setShowReplies, replies}) {
+export default function Message({messageId, userName, msgBody, setReplies, 
+    replyCount, setCurrentMessage, setPage, currentChannel}) {
 
     function handleClick() {
         // pageSetter(messageId);
         // need to pass in channel id as a prop to push the state
         // history.pushState("", "", `/channels/messages/${messageId}`);
-        if (!replies) {
-            setCurrentMessage(messageId);
-            setShowReplies(true);
-        } else {
+        // if (!replies) {
+        //     setCurrentMessage(messageId);
+        //     setShowReplies(true);
+        // } else {
         var fetchURL = "/api/get_replies";
         var sessionToken = window.localStorage.getItem("dramaswamy_session_token");
         fetch(fetchURL, {
@@ -21,37 +22,38 @@ export default function Message({messageId, userName, msgBody, setReplies, reply
             console.log(replies);
             setReplies(replies);
             setCurrentMessage(messageId);
-            setShowReplies(true);
+            history.pushState("","",`/channels/${currentChannel}/messages/${messageId}/replies`);
+            setPage(`/channels/${currentChannel}/messages/${messageId}/replies`);
         }
         );
     }
-    }
     
     
-    if (replyCount > 0) {
-    return(
-        <div>
-            <p>{userName}</p>
-            <p>{msgBody}</p>
-            <p>{replyCount} replies</p>
-            <button onClick={handleClick}>
-            Reply
-            </button>
-        </div>
+    return (<button onClick={handleClick}>Reply</button>);
+    // if (replyCount > 0) {
+    // return(
+    //     <div>
+    //         <p>{userName}</p>
+    //         <p>{msgBody}</p>
+    //         <p>{replyCount} replies</p>
+            // <button onClick={handleClick}>
+            // Reply
+            // </button>
+    //     </div>
         
-    );
-    } else {
-    return (
-        <div>
-            <p>{userName}</p>
-            <p>{msgBody}</p>
-            <button onClick={handleClick}>
-            Reply
-            </button>
-        </div>
-    );
+    // );
+    // } else {
+    // return (
+    //     <div>
+    //         <p>{userName}</p>
+    //         <p>{msgBody}</p>
+    //         <button onClick={handleClick}>
+    //         Reply
+    //         </button>
+    //     </div>
+    // );
     }
-}
+
 
 
 

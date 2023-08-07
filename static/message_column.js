@@ -1,6 +1,7 @@
 import Message from "./message.js";
 
-export default function MessagesColumn({messages, setMessages, setReplies, currentChannel, setShowReplies, replies, setCurrentMessage}) {
+export default function MessagesColumn({messages, setReplies, 
+    currentChannel, setPage, setCurrentMessage}) {
     console.log(messages);
     if (messages) {
     return (
@@ -15,11 +16,10 @@ export default function MessagesColumn({messages, setMessages, setReplies, curre
                         userName = {messages[key].msg_user}
                         msgBody = {messages[key].msg_body}
                         replyCount = {messages[key].reply_count}
-                        setMessages = {setMessages}
                         setReplies={setReplies}
-                        setShowReplies={setShowReplies}
-                        replies = {replies}
                         setCurrentMessage = {setCurrentMessage}
+                        setPage={setPage}
+                        currentChannel={currentChannel}
                     />
                 </div>
             );

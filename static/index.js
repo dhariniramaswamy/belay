@@ -37,6 +37,7 @@ export default function App () {
 
     const [channels, channelSetter] = React.useState([]);
     const [currentChannel, setCurrentChannel] = React.useState("");
+    const [currentMessage, setCurrentMessage] = React.useState("");
     const [messages, setMessages] = React.useState([]);
     const [replies, setReplies] = React.useState([]);
     const [page, setPage] = React.useState("/");
@@ -57,8 +58,23 @@ export default function App () {
             return (<SignUp page={page} setPage={setPage}/>);
         case path == "/profile":
             return (<Profile page={page} setPage={setPage}/>);
-        // case path == `/channels/${currentChannel}`:
-        //     console.log("channel xyz");
+        case path == `/channels/${currentChannel}/messages`:
+            console.log(currentChannel);
+            return (
+                <MessagesColumn 
+                messages={messages} 
+                page={setPage}
+                setReplies={setReplies} 
+                currentChannel={currentChannel}
+                setCurrentMessage = {setCurrentMessage}/>)
+        case path == `/channels/${currentChannel}/messages/${currentMessage}/replies`:
+            return (
+                <RepliesColumn
+                currentMessage={currentMessage}
+                replies={replies}
+                setPage={setPage}
+                currentChannel={currentChannel}/>
+            )
         case path == "/channels":
             console.log("reached home");
             getChannels(channelSetter);
@@ -68,7 +84,7 @@ export default function App () {
                     <button onClick={() => {
                         window.localStorage.removeItem("dramaswamy_session_token");
                         console.log("LOGGING OUT");
-                        // setPage("/");
+                        setPage("/");
                         }}>Log Out</button>
                     <button onClick={() => {setPage("/profile")} }>Profile</button>
                     <div className="container">
@@ -78,11 +94,11 @@ export default function App () {
                                 Object.keys(channels).map((key) => {
                                     return (
                                     <div key = {key}>
-                                        {setCurrentChannel(channels[key].id)}
                                         <Channel
                                             channelId = {channels[key].id}
                                             channelName = {channels[key].name}
                                             setMessages = {setMessages}
+                                            setCurrentChannel = {setCurrentChannel}
                                         />
                                     </div>
                                 );
@@ -106,23 +122,7 @@ export default function App () {
                                 }}>Add Channel</button>
                             </div>
                         </div>
-                        {/* <div>
-                            {showMessages && <MessagesColumn 
-                            messages={messages} 
-                            setMessages={setMessages} 
-                            setReplies={setReplies} 
-                            currentChannel={currentChannel}
-                            setShowReplies={setShowReplies}
-                            replies = {replies}
-                            setCurrentMessage = {setCurrentMessage}/>}
-                        </div>
-                        <div>
-                            {showReplies && <RepliesColumn 
-                            currentMessage = {currentMessage}
-                            replies={replies}
-                            setShowReplies={setShowReplies}/>}
-                        </div> */}
-                    </div>
+                    </div> 
                 </div>
                 );   
             default:
@@ -131,6 +131,7 @@ export default function App () {
 
     // addEventListener("popstate", (event) => {
     //     router(event)
+    // setPage
     // }
     // );
 }

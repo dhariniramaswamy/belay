@@ -1,12 +1,11 @@
 import Reply from "./reply.js";
 
-export default function RepliesColumn({currentMessage, replies, setShowReplies}) {
+export default function RepliesColumn({currentMessage, replies, setPage, currentChannel}) {
     const handleCloseReplies = () => {
-        setShowReplies(false);
+        setPage(`/channels/${currentChannel}/messages`);
       };
     if (replies) {
     return (
-
         <div className="replies-column">
             <h2> Thread </h2>
             <button className="close-replies" onClick={handleCloseReplies}>X</button>

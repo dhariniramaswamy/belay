@@ -1,10 +1,7 @@
 
-export default function Channel({channelId, channelName, setMessages}) {
+export default function Channel({channelId, channelName, setMessages, setCurrentChannel}) {
     
     function handleClick () {
-        // if logged in, do all this.
-        // else, don't show messages (you'll need to use showMessages)
-        // pageSetter(channelId);
         var fetchURL = "/api/get_messages";
         var sessionToken = window.localStorage.getItem("dramaswamy_session_token");
         fetch(fetchURL, {
@@ -14,8 +11,8 @@ export default function Channel({channelId, channelName, setMessages}) {
         .then((response) => response.json())
         .then((msgs) => {
             setMessages(msgs);
-            location.href = `/channels/${channelId}/messages`
             history.pushState("", "", `/channels/${channelId}/messages`);
+            setCurrentChannel(channelId);
         }
         );
         }

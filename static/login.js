@@ -13,9 +13,10 @@ export default function LogIn({page, setPage}) {
                 response.json().then((data) => {
                     console.log(data.session_token)
                     window.localStorage.setItem("dramaswamy_session_token", data.session_token);
-                    setPage("/home");
+                    history.pushState("", "", "/channels");
+                    setPage("/channels");
                     // location.href = "/channels";
-                    // history.pushState("", "", "/channels");
+                    
                     console.log(page);
                     // history.pushState(page, "", page)
                 }
