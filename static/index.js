@@ -1,4 +1,4 @@
-import Channel from "./channel.js";
+import Channels from "./channels.js";
 import MessagesColumn from "./message_column.js";
 import Reply from "./reply.js";
 import Profile from "./profile.js";
@@ -22,17 +22,7 @@ import RepliesColumn from "./replies_column.js";
 
 export default function App () {
     console.log("ACCESSING APP");
-    function getChannels(channelSetter) {
-        var sessionToken = window.localStorage.getItem("dramaswamy_session_token");
-        fetch("/api/get_channels", {
-            "headers": {"Content-Type": "application/json", "sessionToken": sessionToken}
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-        channelSetter(data);
-        });
-    }
+
     
 
     const [channels, channelSetter] = React.useState([]);
@@ -77,54 +67,14 @@ export default function App () {
             )
         case path == "/channels":
             console.log("reached home");
-            getChannels(channelSetter);
             return (
-                <div>
-                    <h2>Belay</h2>
-                    <button onClick={() => {
-                        window.localStorage.removeItem("dramaswamy_session_token");
-                        console.log("LOGGING OUT");
-                        setPage("/");
-                        }}>Log Out</button>
-                    <button onClick={() => {setPage("/profile")} }>Profile</button>
-                    <div className="container">
-                        <div className="channels-column">
-                            <h2> Channels </h2>
-                                {
-                                Object.keys(channels).map((key) => {
-                                    return (
-                                    <div key = {key}>
-                                        <Channel
-                                            channelId = {channels[key].id}
-                                            channelName = {channels[key].name}
-                                            setMessages = {setMessages}
-                                            setCurrentChannel = {setCurrentChannel}
-                                        />
-                                    </div>
-                                );
-                                    })
-                                }
-                            <div className="add-channel">
-                                <input id="channel"></input>
-                                <button onClick= {() => {
-                                    const channelName = document.getElementById("channel").value;
-                                    const sessionToken = window.localStorage.getItem("dramaswamy_session_token");
-                                    if (channelName){
-                                        fetch("/api/create_channel", {
-                                            "method": "POST",
-                                            "headers": {"Content-Type": "application/json",
-                                                        "channelName": channelName,
-                                                        "sessionToken": sessionToken}
-                                        })
-                                        .then((response) => response.json())
-                                        .then((data) => console.log(data))
-                                    }   
-                                }}>Add Channel</button>
-                            </div>
-                        </div>
-                    </div> 
-                </div>
-                );   
+                <Channels
+                setCurrentChannel={setCurrentChannel}
+                setMessages={setMessages}
+                setPage={setPage}
+                channelSetter={channelSetter}
+                channels={channels}/>
+            )
             default:
               console.log("no match");
         }
