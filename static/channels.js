@@ -22,6 +22,7 @@ export default function Channels ({setMessages, setCurrentChannel, setPage, chan
                                     channelName = {channels[key].name}
                                     setMessages = {setMessages}
                                     setCurrentChannel = {setCurrentChannel}
+                                    setPage= {setPage}
                                 />
                             </div>
                         );

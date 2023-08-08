@@ -62,7 +62,24 @@ export default function App () {
         case path == `/channels/${currentChannel}/messages`:
             console.log(currentChannel);
             return (
-                <React.Fragment> 
+                    <div class="container">
+                        <Channels
+                        setCurrentChannel={setCurrentChannel}
+                        setMessages={setMessages}
+                        setPage={setPage}
+                        channels={channels}/>
+                        <MessagesColumn 
+                        messages={messages} 
+                        page={setPage}
+                        setReplies={setReplies} 
+                        currentChannel={currentChannel}
+                        setCurrentMessage = {setCurrentMessage}/>
+                    </div>
+                
+                )
+        case path == `/channels/${currentChannel}/messages/${currentMessage}/replies`:
+            return (
+                <div class="container">
                     <Channels
                     setCurrentChannel={setCurrentChannel}
                     setMessages={setMessages}
@@ -74,25 +91,24 @@ export default function App () {
                     setReplies={setReplies} 
                     currentChannel={currentChannel}
                     setCurrentMessage = {setCurrentMessage}/>
-                </React.Fragment>
-                )
-        case path == `/channels/${currentChannel}/messages/${currentMessage}/replies`:
-            return (
-                <RepliesColumn
-                currentMessage={currentMessage}
-                replies={replies}
-                setPage={setPage}
-                currentChannel={currentChannel}/>
+                    <RepliesColumn
+                    currentMessage={currentMessage}
+                    replies={replies}
+                    setPage={setPage}
+                    currentChannel={currentChannel}/>
+                </div>
             )
         case path == "/channels":
             console.log("reached home");
             getChannels(channelSetter);
             return (
-                <Channels
-                setCurrentChannel={setCurrentChannel}
-                setMessages={setMessages}
-                setPage={setPage}
-                channels={channels}/>
+                <div class="container">
+                    <Channels
+                    setCurrentChannel={setCurrentChannel}
+                    setMessages={setMessages}
+                    setPage={setPage}
+                    channels={channels}/>
+                </div>
             )
             default:
               console.log("no match");

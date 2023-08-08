@@ -157,21 +157,19 @@ def get_replies():
     '''
     if check_session_token():
         msg_id = request.headers["messageId"]
-        print("RECEIVED MSG_ID: ", msg_id)
+        num_replies = reply_count(msg_id)
         replies_js = []
-        replies = query_db("select reply_user_id, reply_body from messages where id = ?", [msg_id], one=False)
-        print(replies)
-        if len(replies) != 0:
+        if num_replies == 0:
+            return jsonify(replies_js)
+        else:
+            replies = query_db("select reply_user_id, reply_body from messages where id = ?", [msg_id], one=False)
             for reply in replies:
                 reply_obj = {}
                 reply_user_id = reply[0]
                 reply_obj["username"] = get_username(reply_user_id)
                 reply_obj["reply_body"] = reply[1]
                 replies_js.append(reply_obj)
-            print(replies)
             return jsonify(replies_js)
-        else:
-            return jsonify(replies)
     else:
         return {"error": "Session token not found"}
 
@@ -186,9 +184,14 @@ def add_message():
         user_id = query_db("select id from users where session_token = ?", [session_token], one=True)[0]
         msg_body = request.headers["message"]
         channel_id = request.headers["channelId"]
-        result = query_db("insert into messages (msg_body, channel_id, user_id, reply_body, reply_user_id) values (?, ?, ?, ?, ?) returning id",
-                          [msg_body, channel_id, user_id, None, None], one=True)[0]
-        return jsonify(result)
+        query_db("insert into messages (msg_body, channel_id, user_id, reply_body, reply_user_id) values (?, ?, ?, ?, ?) returning id",
+                          [msg_body, channel_id, user_id, None, None], one=True)
+        rv = {}
+        username = get_username(user_id)
+        rv["username"] = username
+        rv["msg_body"] = msg_body
+        print("ADDING MESSAGE", rv)
+        return rv
     else:
         return {"error": "Session token not found"}
 

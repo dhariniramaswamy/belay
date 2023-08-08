@@ -2,7 +2,6 @@ import Message from "./message.js";
 
 export default function MessagesColumn({messages, setReplies, 
     currentChannel, setPage, setCurrentMessage}) {
-    console.log(messages);
     if (messages) {
     return (
         <div className="messages-column">
@@ -39,7 +38,11 @@ export default function MessagesColumn({messages, setReplies,
                                     "message": message}
                     })
                     .then((response) => response.json())
-                    .then((data) => console.log(data))
+                    .then((data) => {
+                        messages.push(data);
+                        history.pushState("", "", `/channels/${currentChannel}/messages`);
+                        console.log(messages);
+                    })
                 }   
             }}>Post</button>
         </div>

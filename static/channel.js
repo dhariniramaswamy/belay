@@ -1,5 +1,6 @@
 
-export default function Channel({channelId, channelName, setMessages, setCurrentChannel}) {
+export default function Channel({channelId, channelName, setMessages, setCurrentChannel,
+                                setPage}) {
     
     function handleClick () {
         var fetchURL = "/api/get_messages";
@@ -12,6 +13,7 @@ export default function Channel({channelId, channelName, setMessages, setCurrent
         .then((msgs) => {
             setMessages(msgs);
             history.pushState("", "", `/channels/${channelId}/messages`);
+            setPage(`/channels/${channelId}/messages`);
             setCurrentChannel(channelId);
         }
         );

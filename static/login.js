@@ -15,10 +15,7 @@ export default function LogIn({page, setPage}) {
                     window.localStorage.setItem("dramaswamy_session_token", data.session_token);
                     history.pushState("", "", "/channels");
                     setPage("/channels");
-                    // location.href = "/channels";
-                    
                     console.log(page);
-                    // history.pushState(page, "", page)
                 }
                 )
             } else {

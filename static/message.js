@@ -23,37 +23,32 @@ export default function Message({messageId, userName, msgBody, setReplies,
             setReplies(replies);
             setCurrentMessage(messageId);
             history.pushState("","",`/channels/${currentChannel}/messages/${messageId}/replies`);
-            setPage(`/channels/${currentChannel}/messages/${messageId}/replies`);
+            // setPage(`/channels/${currentChannel}/messages/${messageId}/replies`);
         }
         );
     }
     
-    
-    return (<button onClick={handleClick}>Reply</button>);
-    // if (replyCount > 0) {
-    // return(
-    //     <div>
-    //         <p>{userName}</p>
-    //         <p>{msgBody}</p>
-    //         <p>{replyCount} replies</p>
-            // <button onClick={handleClick}>
-            // Reply
-            // </button>
-    //     </div>
+    if (replyCount > 0) {
+    return(
+        <div>
+            <p>{userName}</p>
+            <p>{msgBody}</p>
+            <p>{replyCount} replies</p>
+            <button onClick={handleClick}>
+            Reply
+            </button>
+        </div>
         
-    // );
-    // } else {
-    // return (
-    //     <div>
-    //         <p>{userName}</p>
-    //         <p>{msgBody}</p>
-    //         <button onClick={handleClick}>
-    //         Reply
-    //         </button>
-    //     </div>
-    // );
+    );
+    } else {
+    return (
+        <div>
+            <p>{userName}</p>
+            <p>{msgBody}</p>
+            <button onClick={handleClick}>
+            Reply
+            </button>
+        </div>
+    );
     }
-
-
-
-
+}
