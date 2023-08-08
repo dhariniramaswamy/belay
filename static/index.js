@@ -41,14 +41,18 @@ export default function App () {
     const [currentMessage, setCurrentMessage] = React.useState("");
     const [messages, setMessages] = React.useState([]);
     const [replies, setReplies] = React.useState([]);
-    const [page, setPage] = React.useState("/");
+    const [page, setPage] = React.useState("");
 
     // const router = () => {
     //     const path = window.location.pathname;
     //     console.log(`routing to "${path}"...`);
     // }
     const path = window.location.pathname;
-    console.log(path);
+    // if (page !== path) {
+    //     history.pushState(null, "", page)
+    // }
+    // console.log(path);
+    // console.log(page);
     switch (true) {
         case path == "/":
             console.log("made it to landing");
@@ -73,7 +77,8 @@ export default function App () {
                         page={setPage}
                         setReplies={setReplies} 
                         currentChannel={currentChannel}
-                        setCurrentMessage = {setCurrentMessage}/>
+                        setCurrentMessage = {setCurrentMessage}
+                        setMessages = {setMessages}/>
                     </div>
                 
                 )
@@ -90,7 +95,8 @@ export default function App () {
                     page={setPage}
                     setReplies={setReplies} 
                     currentChannel={currentChannel}
-                    setCurrentMessage = {setCurrentMessage}/>
+                    setCurrentMessage = {setCurrentMessage}
+                    setMessages = {setMessages}/>
                     <RepliesColumn
                     currentMessage={currentMessage}
                     replies={replies}
@@ -99,7 +105,7 @@ export default function App () {
                 </div>
             )
         case path == "/channels":
-            console.log("reached home");
+            console.log(page);
             getChannels(channelSetter);
             return (
                 <div class="container">
@@ -116,8 +122,7 @@ export default function App () {
         }
 
     // addEventListener("popstate", (event) => {
-    //     router(event)
-    // setPage
+    //     setPage(event)
     // }
     // );
 }

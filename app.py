@@ -184,14 +184,16 @@ def add_message():
         user_id = query_db("select id from users where session_token = ?", [session_token], one=True)[0]
         msg_body = request.headers["message"]
         channel_id = request.headers["channelId"]
-        query_db("insert into messages (msg_body, channel_id, user_id, reply_body, reply_user_id) values (?, ?, ?, ?, ?) returning id",
-                          [msg_body, channel_id, user_id, None, None], one=True)
-        rv = {}
+        msg_id = query_db("insert into messages (msg_body, channel_id, user_id, reply_body, reply_user_id) values (?, ?, ?, ?, ?) returning id",
+                          [msg_body, channel_id, user_id, None, None], one=True)[0]
+        msg = {}
         username = get_username(user_id)
-        rv["username"] = username
-        rv["msg_body"] = msg_body
-        print("ADDING MESSAGE", rv)
-        return rv
+        msg["msg_user"] = username
+        msg["msg_body"] = msg_body
+        msg["id"] = msg_id
+        msg["reply_count"] = reply_count(msg_id)
+        print("ADDING MESSAGE", msg)
+        return msg
     else:
         return {"error": "Session token not found"}
 
