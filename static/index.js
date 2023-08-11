@@ -47,12 +47,20 @@ export default function App () {
     //     const path = window.location.pathname;
     //     console.log(`routing to "${path}"...`);
     // }
+
+        // Listen for changes in the URL and update the route state
+        // const handleRouteChange = () => {
     const path = window.location.pathname;
+    // const path = window.location.pathname;
     // if (page !== path) {
     //     history.pushState(null, "", page)
     // }
     // console.log(path);
     // console.log(page);
+        addEventListener("popstate", (event) => {
+            setPage(event);
+        }
+        );
     switch (true) {
         case path == "/":
             console.log("made it to landing");
@@ -121,51 +129,8 @@ export default function App () {
               return null;
         }
 
-    // addEventListener("popstate", (event) => {
-    //     setPage(event)
-    // }
-    // );
+
 }
-
-
-
-
-    // const [isLoggedIn, setLogIn] = React.useState(false);
-    // const [showLogIn, setShowLogIn] = React.useState(false);
-    // const [showProfile, setShowProfile] = React.useState(false);
-    // const [showSignUp, setShowSignUp] = React.useState(false);
-    // const [currentChannel, setCurrentChannel] = React.useState(null);
-    // const [currentMessage, setCurrentMessage] = React.useState(null);
-    // const [showMessages, setShowMessages] = React.useState(false);
-    // const [showReplies, setShowReplies] = React.useState(false);
-
-
-
-    // React.useEffect(() => {
-    //     if (isLoggedIn) {
-    //       getChannels(channelSetter);
-    //     }
-    //   }, [isLoggedIn]);
-    
-    // if (!isLoggedIn && !showLogIn && !showSignUp) {
-    //     history.pushState("", "", "/")
-    //     return(
-    //         <div>
-    //             <h2>Belay</h2>
-    //             <button onClick={() => {setShowLogIn(true)}}>Log In</button>
-    //             <button onClick={() => {setShowSignUp(true)} }>Sign Up</button>
-    //         </div>
-    //     );
-    // } else if (showLogIn){
-    //     history.pushState("", "", "/login")
-        
-    // } else if (showSignUp){
-    //     return <SignUp setLogIn={setLogIn} setShowSignUp={setShowSignUp}/>;
-    // } else if (showProfile){
-    //     return <Profile setShowProfile={setShowProfile}/>;
-    // } else if (isLoggedIn) {
-
-
 
 ReactDOM.render(
     React.createElement(App),
