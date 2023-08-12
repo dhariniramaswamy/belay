@@ -1,3 +1,63 @@
+body {
+  font-family: Sans-Serif;
+}
+
+.app-title {
+  color: #5F8575;
+  padding: 0.5em 1em;
+}
+
+.login-form {
+  width: 300px; 
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid grey;
+  padding: 1em;
+  margin: 0 auto; 
+}
+
+.sign-in {
+  font-size: 18px;
+  align-items: left;
+}
+
+.input-group {
+  margin-bottom: 1em;
+}
+
+.input-group input {
+  width: 100%; 
+  padding: 0.5em;
+  font-size: 16px; 
+}
+
+.form-button {
+  width: 190px;
+  border-radius: 5px;
+  color: white;
+  background-color:#5F8575;
+  padding: 0.75em 1.5em;
+}
+
+.signup {
+  padding: 0.5em;
+  font-size: 12px;
+}
+
+.signup-button {
+  border: none;
+  background: none;
+  padding: 0.5em;
+  cursor: pointer;
+  color: #5F8575;
+  font-size: 12px; 
+  font-weight: bold;
+}
+
+
 .channels-column {
     flex: 33.33%;
     height: 500px;

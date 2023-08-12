@@ -1,6 +1,5 @@
-export default function SignUp({page, setPage}){
+export default function SignUp({setPage}){
     function handleClick() {
-        history.pushState("", "", "/signup")
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
         var fetchUrl = "/api/signup";
@@ -13,15 +12,15 @@ export default function SignUp({page, setPage}){
                 response.json().then((data) => {
                     console.log(data.session_token)
                     window.localStorage.setItem("dramaswamy_session_token", data.session_token);
-                    setPage("/home")
-                    history.pushState(page, "", page)
+                    history.pushState("", "", "/channels");
+                    setPage("/channels");
                 }
                 )
             } 
     });
     }
 
-    return(
+    return (
         <div className="sign-up">
             <h2>Sign Up</h2>
             <div className="signup_form">

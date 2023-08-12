@@ -1,15 +1,18 @@
 import Channel from "./channel.js";
 
-export default function Channels ({setMessages, setCurrentChannel, setPage, channels}) {
+export default function Channels ({setMessages, setCurrentChannel, setPage, 
+    channels, channelSetter}) {
     return (
         <div>
             <h2>Home</h2>
             <button onClick={() => {
                 window.localStorage.removeItem("dramaswamy_session_token");
                 console.log("LOGGING OUT");
+                history.pushState("", "", "/")
                 setPage("/");
                 }}>Log Out</button>
-            <button onClick={() => {setPage("/profile")} }>Profile</button>
+            <button onClick={() => {history.pushState("", "", "/profile");
+            setPage("/profile")} }>Profile</button>
             <div className="container">
                 <div className="channels-column">
                     <h2> Channels </h2>
@@ -31,9 +34,10 @@ export default function Channels ({setMessages, setCurrentChannel, setPage, chan
                     <div className="add-channel">
                         <input id="channel"></input>
                         <button onClick= {() => {
-                            const channelName = document.getElementById("channel").value;
+                            const channelInput = document.getElementById("channel");
+                            const channel = channelInput.value;
                             const sessionToken = window.localStorage.getItem("dramaswamy_session_token");
-                            if (channelName){
+                            if (channel){
                                 fetch("/api/create_channel", {
                                     "method": "POST",
                                     "headers": {"Content-Type": "application/json",
@@ -41,7 +45,15 @@ export default function Channels ({setMessages, setCurrentChannel, setPage, chan
                                                 "sessionToken": sessionToken}
                                 })
                                 .then((response) => response.json())
-                                .then((data) => console.log(data))
+                                .then((data) => {
+                                    console.log(data);
+                                    const updatedChannels = [...channels, data];
+                                    channelSetter(updatedChannels);
+                                    history.pushState("", "", `/channels/`);
+                                    // setPage(`/channels/${currentChannel}/messages`);
+                                    channelInput.value = "";
+                                    console.log(channels);
+                                })
                             }   
                         }}>Add Channel</button>
                     </div>

@@ -1,4 +1,4 @@
-export default function Profile({page, setPage}) {
+export default function Profile({setPage}) {
     const sessionToken = window.localStorage.getItem("dramaswamy_session_token");
     console.log("making it to profile page");
     function handleClickUsername () {
@@ -13,8 +13,8 @@ export default function Profile({page, setPage}) {
             if(response.status == 200){
                 response.json().then((data) => {
                     console.log(data);
-                    setPage("/home")
-                    history.pushState(page, "", page)
+                    history.pushState("", "", "/channels");
+                    setPage("/channels");
                 }
                 )
             } else {
@@ -39,8 +39,9 @@ export default function Profile({page, setPage}) {
             if(response.status == 200){
                 response.json().then((data) => {
                     console.log(data);
-                    setPage("/home")
-                    history.pushState(page, "", page)
+                    history.pushState("", "", "/channels");
+                    setPage("/channels");
+                    
                 }
                 )
             } else {
@@ -57,15 +58,17 @@ export default function Profile({page, setPage}) {
         <div>
             <h2>Profile</h2>
             <div className="profile_form">
+                <h3>Enter your new username:</h3>
                 <label htmlFor="username">Username</label>
                 <input id="username"></input>
                 <button className="form_button" onClick={handleClickUsername}>
-                Change Username
+                Submit
                 </button>
+                <h3>Enter your new password:</h3>
                 <label htmlFor="password">Password</label>
                 <input id="password" type="password"></input>
                 <button className="form_button" onClick={handleClickPassword}>
-                Change Password
+                Submit
                 </button>
             </div>
         </div>

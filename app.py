@@ -93,9 +93,12 @@ def create_channel():
     '''
     if check_session_token():
         channel_name = request.headers["channelName"]
-        result = query_db("insert into channels (channel_name) values (?) returning id", [channel_name], one=True)[0]
+        id = query_db("insert into channels (channel_name) values (?) returning id", [channel_name], one=True)[0]
         print("successfully added channel to DB")
-        return jsonify(result)
+        channel_obj = {}
+        channel_obj["id"] = id
+        channel_obj["name"] = channel_name
+        return channel_obj
     else:
         return {"error": "could not validate session token"}
 

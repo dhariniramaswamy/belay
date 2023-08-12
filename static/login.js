@@ -1,4 +1,4 @@
-export default function LogIn({page, setPage}) {
+export default function LogIn({setPage}) {
     console.log("making it to login");
     function handleClick () {
         const username = document.getElementById("username").value;
@@ -31,20 +31,22 @@ export default function LogIn({page, setPage}) {
     return (
        <>
        <div>
-            <h2>Login</h2>
-            <div className="login_form">
-                <label htmlFor="username">Username</label>
-                <input id="username"></input>
-                <label htmlFor="password">Password</label>
-                <input id="password" type="password"></input>
-                <button className="form_button" onClick={handleClick}>
-                Submit
+            <h1 className="app-title">BELAY</h1>
+            <div className="login-form">
+                <h3 className="sign-in">Sign in</h3>
+            <div className="input-group">
+                <input type="text" placeholder="Enter Username" name="username" required></input>
+            </div>
+            <div className="input-group">   
+                <input type="text" placeholder="Enter Password" name="password" required></input>
+            </div>  
+                <button className="form-button" onClick={handleClick}>
+                Login
                 </button>
+            <div className="signup">New user? <button className="signup-button" onClick={() => {history.pushState("", "", "/signup");
+            setPage("/signup")}}>Sign up</button></div>
             </div>
         </div>
-         {/* <div>
-            <button className="signup_button" onClick={setPage("/signup")}></button>
-        </div> */}
         </>
     );
     }

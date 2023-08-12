@@ -59,7 +59,8 @@ export default function MessagesColumn({messages, setReplies,
                 <div className="add-message">
                     <textarea id="message" rows="12" cols="50"></textarea>
                     <button onClick= {() => {
-                        const message = document.getElementById("message").value;
+                        const messageInput = document.getElementById("message");
+                        const message = messageInput.value;
                         const sessionToken = window.localStorage.getItem("dramaswamy_session_token");
                         if (message){
                             fetch("/api/add_message", {
@@ -70,7 +71,15 @@ export default function MessagesColumn({messages, setReplies,
                                             "message": message}
                             })
                             .then((response) => response.json())
-                            .then((data) => console.log(data))
+                            .then((data) => {
+                                console.log(data);
+                                const updatedMessages = [...messages, data];
+                                setMessages(updatedMessages);
+                                history.pushState("", "", `/channels/${currentChannel}/messages`);
+                                // setPage(`/channels/${currentChannel}/messages`);
+                                messageInput.value = "";
+                                console.log(messages);
+                            })
                         }   
                     }}>Post</button>
                 </div>
