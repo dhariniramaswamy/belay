@@ -35,10 +35,10 @@ export default function LogIn({setPage}) {
             <div className="login-form">
                 <h3 className="sign-in">Sign in</h3>
             <div className="input-group">
-                <input type="text" placeholder="Enter Username" name="username" required></input>
+                <input id="username"type="text" placeholder="Enter Username" name="username" required></input>
             </div>
             <div className="input-group">   
-                <input type="text" placeholder="Enter Password" name="password" required></input>
+                <input id="password"type="text" placeholder="Enter Password" name="password" required></input>
             </div>  
                 <button className="form-button" onClick={handleClick}>
                 Login
