@@ -30,24 +30,28 @@ export default function Message({messageId, userName, msgBody, setReplies,
     
     if (replyCount > 0) {
     return(
-        <div>
-            <p>{userName}</p>
-            <p>{msgBody}</p>
-            <p>{replyCount} replies</p>
-            <button onClick={handleClick}>
-            Reply
-            </button>
+        <div className="message-container">
+            <div className="message-header">
+                <span class="username">{userName}</span>
+                <button className="reply-button" onClick={handleClick}>Reply</button>
+            </div>
+            <div className="message-body">
+                {msgBody}
+            </div>
+            <button className="num-replies-button" onClick={handleClick}>{replyCount} replies</button>
         </div>
         
     );
     } else {
     return (
-        <div>
-            <p>{userName}</p>
-            <p>{msgBody}</p>
-            <button onClick={handleClick}>
-            Reply
-            </button>
+        <div className="message-container">
+            <div className="message-header">
+                <span class="username">{userName}</span>
+                <button className="reply-button" onClick={handleClick}>Reply</button>
+            </div>
+            <div className="message-body">
+                {msgBody}
+            </div>
         </div>
     );
     }

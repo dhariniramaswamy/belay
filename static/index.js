@@ -153,6 +153,18 @@ export default function App () {
         });
     }
 
+    function handleLogOutClick() {
+        window.localStorage.removeItem("dramaswamy_session_token");
+        console.log("LOGGING OUT");
+        history.pushState("", "", "/")
+        setPage("/");
+    }
+
+    function handleProfileClick() {
+        history.pushState("", "", "/profile");
+        setPage("/profile");
+    }
+
     const [channels, channelSetter] = React.useState([]);
     const [currentChannel, setCurrentChannel] = React.useState("");
     const [currentMessage, setCurrentMessage] = React.useState("");
@@ -191,25 +203,41 @@ export default function App () {
         case path == `/channels/${currentChannel}/messages`:
             console.log(currentChannel);
             return (
-                    <div class="container">
-                        <Channels
-                        channelSetter={channelSetter}
-                        setCurrentChannel={setCurrentChannel}
-                        setMessages={setMessages}
-                        setPage={setPage}
-                        channels={channels}/>
-                        <MessagesColumn 
-                        messages={messages} 
-                        page={setPage}
-                        setReplies={setReplies} 
-                        currentChannel={currentChannel}
-                        setCurrentMessage = {setCurrentMessage}
-                        setMessages = {setMessages}/>
+                <>
+                <div className="header">
+                    <h2 className="home-title">Welcome, user x!</h2>
+                    <div className="buttons">
+                        <button className="profile-button" onClick={handleProfileClick}>Profile</button>
+                        <button className="logout-button" onClick={handleLogOutClick}>Log Out</button>
                     </div>
-                
+                </div>
+                <div class="container">
+                    <Channels
+                    channelSetter={channelSetter}
+                    setCurrentChannel={setCurrentChannel}
+                    setMessages={setMessages}
+                    setPage={setPage}
+                    channels={channels}/>
+                    <MessagesColumn 
+                    messages={messages} 
+                    page={setPage}
+                    setReplies={setReplies} 
+                    currentChannel={currentChannel}
+                    setCurrentMessage = {setCurrentMessage}
+                    setMessages = {setMessages}/>
+                </div>
+                </>
                 )
         case path == `/channels/${currentChannel}/messages/${currentMessage}/replies`:
             return (
+                <>
+                <div className="header">
+                    <h2 className="home-title">Welcome, user x!</h2>
+                    <div className="buttons">
+                        <button className="profile-button" onClick={handleProfileClick}>Profile</button>
+                        <button className="logout-button" onClick={handleLogOutClick}>Log Out</button>
+                    </div>
+                </div>
                 <div class="container">
                     <Channels
                     channelSetter={channelSetter}
@@ -230,11 +258,20 @@ export default function App () {
                     setPage={setPage}
                     currentChannel={currentChannel}/>
                 </div>
+                </>
             )
         case path == "/channels":
             console.log(page);
             getChannels(channelSetter);
             return (
+                <>
+                <div className="header">
+                    <h2 className="home-title">Welcome, user x!</h2>
+                    <div className="buttons">
+                        <button className="profile-button" onClick={handleProfileClick}>Profile</button>
+                        <button className="logout-button" onClick={handleLogOutClick}>Log Out</button>
+                    </div>
+                </div>
                 <div class="container">
                     <Channels
                     channelSetter={channelSetter}
@@ -243,6 +280,7 @@ export default function App () {
                     setPage={setPage}
                     channels={channels}/>
                 </div>
+                </>
             )
             default:
               console.log("no match");

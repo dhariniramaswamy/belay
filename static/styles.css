@@ -41,11 +41,12 @@ body {
   background-color:#5F8575;
   padding: 0.75em 1.5em;
 }
-
+ 
 .signup {
   padding: 0.5em;
   font-size: 12px;
 }
+
 
 .signup-button {
   border: none;
@@ -58,6 +59,54 @@ body {
 }
 
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+
+.home-title {
+  margin: 0;
+  padding: 10px;
+}
+
+
+.logout-button,
+.profile-button {
+    margin-left: 10px;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+}
+/* .columns {
+  display: flex;
+  width: 100%;
+} */
+
+/* .channels-column,
+.messages-column,
+.replies-column {
+    flex: 1; 
+    height: 500px; 
+    padding: 10px;
+    background-color: #5F8575;
+    text-align: left;
+    overflow-y: auto;
+}
+
+.container {
+    display: flex;
+    width: 100%; 
+    flex-direction: column;
+    align-items: center;
+} */
+
+
+
 .channels-column {
     flex: 33.33%;
     height: 500px;
@@ -65,15 +114,17 @@ body {
     margin: 5px;
     background-color: #5F8575;
     text-align: left;
+    overflow-y: auto;
   }
 
   .messages-column {
     flex: 33.33%;
-    height: auto;
+    height: 500px;
     padding: 10px;
     margin: 5px;
     background-color: #5F8575;
     text-align: left;
+    overflow-y: auto;
   }
 
   .replies-column {
@@ -83,14 +134,93 @@ body {
     margin: 5px;
     background-color: #5F8575;
     text-align: left;
-  }
+    overflow-y: auto;
+  } 
 
   .container {
      display: flex;
   }
 
+
+  .message-container, 
+  .reply-container {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px 0;
+    position: relative;
+}
+
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.username {
+  font-weight: bold;
+}
+
+
+.reply-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+
+.num-replies-button {
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 10px;
+  color: #5F8575;
+}
+
+  /* .container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    grid-gap: 20px;
+    height: 100vh; 
+}
+
+.channels-column {
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 300px; 
+    height: 100%; 
+    overflow-y: auto; 
+    background-color: #5F8575;
+}
+
+.messages-column {
+  padding: 20px;
+  border: 1px solid #ccc;
+  width: 300px; 
+  height: 100%; 
+  overflow-y: auto; 
+  background-color: #5F8575;
+}
+
+.replies-column {
+  padding: 20px;
+  border: 1px solid #ccc;
+  width: 300px; 
+  height: 100%; 
+  overflow-y: auto; 
+  background-color: #5F8575;
+} */
+
   .textarea {
-    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .close-replies {

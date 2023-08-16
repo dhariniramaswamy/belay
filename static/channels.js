@@ -4,16 +4,6 @@ export default function Channels ({setMessages, setCurrentChannel, setPage,
     channels, channelSetter}) {
     return (
         <div>
-            <h2>Home</h2>
-            <button onClick={() => {
-                window.localStorage.removeItem("dramaswamy_session_token");
-                console.log("LOGGING OUT");
-                history.pushState("", "", "/")
-                setPage("/");
-                }}>Log Out</button>
-            <button onClick={() => {history.pushState("", "", "/profile");
-            setPage("/profile")} }>Profile</button>
-            <div className="container">
                 <div className="channels-column">
                     <h2> Channels </h2>
                         {
@@ -57,8 +47,7 @@ export default function Channels ({setMessages, setCurrentChannel, setPage,
                             }   
                         }}>Add Channel</button>
                     </div>
-                </div>
-            </div> 
+                    </div>
         </div>
         ); 
 }

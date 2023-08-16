@@ -3,9 +3,11 @@ export default function Reply({userName, body}) {
     console.log({body});
 
     return (
-    <>
-        <p>{userName}</p>
-        <p>{body}</p>
-    </>
+    <div className="reply-container">
+        <span class="username">{userName}</span>
+            <div className="reply-body">
+                {body}
+            </div>
+    </div>
     );
 }
